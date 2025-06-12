@@ -1,10 +1,12 @@
-// routes/userRoutes.js
 const express = require('express');
 const router = express.Router();
+const verifyToken = require('../middleware/authMiddleware');
 
-// Example route
-router.get('/', (req, res) => {
-  res.json({ message: 'All users will be listed here' });
+router.get('/me', verifyToken, (req, res) => {
+  res.json({
+    message: 'User verified',
+    user: req.user, // { id: ..., iat: ..., exp: ... }
+  });
 });
 
 module.exports = router;
