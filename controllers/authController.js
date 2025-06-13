@@ -18,7 +18,7 @@ exports.register = (req, res) => {
   const query = 'INSERT INTO users (name, email, password, phone) VALUES (?, ?, ?, ?)';
   const values = [name, email, hashed, phone || null];
 
-  db.query(query, values, (err, result) => {
+  db.query(query, values, (err) => {
     if (err) {
       console.error('❌ Registration error:', err.message);
       return res.status(500).json({ error: 'Something went wrong during registration' });
@@ -35,6 +35,7 @@ exports.login = (req, res) => {
   // 🛡️ Input validation
   if (!email || !password)
     return res.status(400).json({ error: 'Email and password are required' });
+  console.log('email', email);
 
   const query = 'SELECT * FROM users WHERE email = ?';
   db.query(query, [email], (err, results) => {
